@@ -9,20 +9,11 @@ import (
 	"strings"
 	"time"
 
+	. "platform"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
-
-type WordVal struct {
-	WordId   int64
-	WordName string
-	WordVal  uint
-	Tmp      int
-}
-
-func (WordVal) TableName() string {
-	return "word_val"
-}
 
 //按行读取
 func WriteWord(db *gorm.DB) {
@@ -73,19 +64,17 @@ func WriteWord(db *gorm.DB) {
 			last = time.Now()
 			wordslice = make([]WordVal, 0)
 		}
-
 	}
 }
 
 func main() {
+
 	// 参考 https://github.com/go-sql-driver/mysql#dsn-data-source-name 获取详情
 	dsn := "root:123456@tcp(127.0.0.1:3306)/word_val?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
 	if err != nil {
-		panic("open db err")
+		panic(err)
 	}
-	WriteWord(db)
-	word := WordVal{}
-	db.Create(&word)
-	fmt.Println(word)
+	fmt.Println(db)
 }
