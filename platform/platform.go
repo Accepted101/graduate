@@ -3,7 +3,7 @@ package platform
 type WordVal struct {
 	WordId   int64
 	WordName string
-	WordVal  uint
+	WordVal  int64
 	Tmp      int
 }
 
